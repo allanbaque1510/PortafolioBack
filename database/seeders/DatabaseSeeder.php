@@ -60,7 +60,7 @@ class DatabaseSeeder extends Seeder
         $this->command->comment('Work Experience Skill Seeder inicia ejecucion....');
         $this->call(WorkExperienceSkillSeeder::class);
         
-        $this->command->comment('Service Seeder inicia ejecucion....');
+        $this->command->comment('Service Seeder inicia ejecucion....xd');
         $this->call(ServiceSeeder::class);
 
       
