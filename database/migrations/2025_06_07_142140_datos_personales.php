@@ -46,7 +46,7 @@ return new class extends Migration
         Schema::create('social_media', function (Blueprint $table) {
             $table->id();
             $table->string('platform');
-            $table->string('url');
+            $table->text('url');
             $table->string('icon');
             $table->string('background_color');
             $table->string('text_color');
@@ -66,11 +66,11 @@ return new class extends Migration
             $table->string('institution');
             $table->string('level');
             $table->string('profession');
-            $table->string('start_date');
-            $table->string('end_date');
+            $table->date('start_date');
+            $table->date('end_date')->nullable();
             $table->string('city');
             $table->string('country');
-            $table->string('description');
+            $table->text('description');
             $table->unsignedBigInteger('language_id')->default(1);
             $table->foreign('language_id')->references('id')->on('language');
             $table->boolean('status')->default(1);
@@ -81,7 +81,7 @@ return new class extends Migration
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('description');
+            $table->text('description');
             $table->string('slug');
             $table->string('icon');
             $table->unsignedBigInteger('language_id')->default(1);
@@ -94,10 +94,10 @@ return new class extends Migration
         Schema::create('skills', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('description');
+            $table->text('description');
             $table->string('slug');
             $table->string('icon');
-            $table->string('start_date');
+            $table->date('start_date');
             $table->unsignedBigInteger('language_id')->default(1);
             $table->foreign('language_id')->references('id')->on('language');
             $table->boolean('status')->default(1);
@@ -110,7 +110,7 @@ return new class extends Migration
             $table->string('title');
             $table->text('content');
             $table->string('image')->nullable();
-            $table->string('video_url')->nullable();
+            $table->text('video_url')->nullable();
             $table->enum('type', ['presentation', 'project']);
             $table->unsignedBigInteger('language_id')->default(1);
             $table->foreign('language_id')->references('id')->on('language');
@@ -126,8 +126,8 @@ return new class extends Migration
             $table->string('url');
             $table->string('image');
             $table->string('github_url');
-            $table->string('start_date');
-            $table->string('end_date');
+            $table->date('start_date');
+            $table->date('end_date')->nullable();
             $table->unsignedBigInteger('category_id');
             $table->foreign('category_id')->references('id')->on('categories')->onUpdate('cascade');
             $table->unsignedBigInteger('presentation_id');
@@ -154,8 +154,8 @@ return new class extends Migration
             $table->id();
             $table->string('company_name');
             $table->string('position');
-            $table->text('description');
-            $table->text('achievements');
+            $table->longText('description');
+            $table->longText('achievements');
             $table->date('start_date');
             $table->date('end_date')->nullable();
             $table->boolean('is_current')->default(1);
@@ -174,7 +174,7 @@ return new class extends Migration
             $table->unsignedBigInteger('work_experience_id');
             $table->foreign('work_experience_id')->references('id')->on('work_experience')->onUpdate('cascade');
             $table->string('title');
-            $table->text('description');
+            $table->longText('description');
             $table->unsignedBigInteger('language_id')->default(1);
             $table->foreign('language_id')->references('id')->on('language');
             $table->boolean('status')->default(1);
@@ -197,7 +197,7 @@ return new class extends Migration
         Schema::create('services', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->text('description');
+            $table->longText('description');
             $table->string('image');
             $table->string('url');
             $table->string('icon');

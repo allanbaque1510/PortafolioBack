@@ -47,7 +47,9 @@ class PortafolioController extends Controller
                 'projects'=>fn($q)=>$q
                     ->with(['presentation','projectSkills'=>fn($qu)=>$qu->with(['skill'])])
                     ->where('language_id', $lenguage->id)
-                ])->where('language_id', $lenguage->id)->get();
+                ])
+                ->whereHas('projects', fn($q)=>$q->where('language_id', $lenguage->id))
+                ->where('language_id', $lenguage->id)->get();
             return response()->json([
                 'projects' => $projects
             ]);
