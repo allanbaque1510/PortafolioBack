@@ -39,4 +39,5 @@ Route::apiResource('services',              ServiceController::class);
 Route::get('portafolio',                    [PortafolioController::class, 'index']);
 Route::get('portafolio/projects',           [PortafolioController::class, 'projects']);
 Route::get('portafolio/work-experience',    [PortafolioController::class, 'workExperience']);
+Route::get('portafolio/services',    [PortafolioController::class, 'services']);
 

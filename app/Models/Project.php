@@ -9,8 +9,12 @@ class Project extends Model
     protected $table = 'projects';
 
     protected $fillable = [
-        'title', 'description', 'url', 'image', 'github_url',
-        'start_date', 'end_date', 'category_id', 'presentation_id',
+        'title', 'description', 'url', 'image',
+        'start_date', 'end_date',
+        'first_label',
+        'first_url_gihub',
+        'second_label',
+        'second_url_gihub',
         'language_id', 'status', 'order'
     ];
 
@@ -20,12 +24,9 @@ class Project extends Model
     }
 
     public function category() {
-        return $this->belongsTo(Category::class);
+        return $this->belongsTo(ProjectCategory::class,'proyect_id');
     }
 
-    public function presentation() {
-        return $this->belongsTo(Presentation::class);
-    }
 
     public function projectSkills() {
         return $this->hasMany(ProjectSkill::class, 'proyect_id');

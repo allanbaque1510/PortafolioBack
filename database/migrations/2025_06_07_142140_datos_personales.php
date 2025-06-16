@@ -123,27 +123,36 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->longText('description');
-            $table->string('url');
+            $table->string('url')->nullable();
             $table->string('image');
-            $table->string('github_url');
+            $table->string('first_label')->nullable();
+            $table->string('first_url_gihub')->nullable();
+            $table->string('second_label')->nullable();
+            $table->string('second_url_gihub')->nullable();
             $table->date('start_date');
             $table->date('end_date')->nullable();
-            $table->unsignedBigInteger('category_id');
-            $table->foreign('category_id')->references('id')->on('categories')->onUpdate('cascade');
-            $table->unsignedBigInteger('presentation_id');
-            $table->foreign('presentation_id')->references('id')->on('presentations')->onUpdate('cascade');
             $table->unsignedBigInteger('language_id')->default(1);
             $table->foreign('language_id')->references('id')->on('language');
             $table->boolean('status')->default(1);
             $table->integer('order')->default(0);
             $table->timestamps();
         });
+        
+        Schema::create('project_category', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('category_id');
+            $table->foreign('category_id')->references('id')->on('categories')->onUpdate('cascade');
+            $table->unsignedBigInteger('project_id');
+            $table->foreign('project_id')->references('id')->on('projects')->onUpdate('cascade');
+            $table->boolean('status')->default(1);
+            $table->timestamps();
+        });
     
        Schema::create('project_skills', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('proyect_id');
+            $table->unsignedBigInteger('project_id');
             $table->unsignedBigInteger('skill_id');
-            $table->foreign('proyect_id')->references('id')->on('projects')->onUpdate('cascade');           
+            $table->foreign('project_id')->references('id')->on('projects')->onUpdate('cascade');           
             $table->foreign('skill_id')->references('id')->on('skills')->onUpdate('cascade');           
             $table->boolean('status')->default(1);
             $table->integer('order')->default(0);
@@ -199,7 +208,7 @@ return new class extends Migration
             $table->string('title');
             $table->longText('description');
             $table->string('image');
-            $table->string('url');
+            $table->string('url')->nullable();
             $table->string('icon');
             $table->unsignedBigInteger('language_id')->default(1);
             $table->foreign('language_id')->references('id')->on('language');

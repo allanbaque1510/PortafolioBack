@@ -8,11 +8,11 @@ class ProjectSkill extends Model
 {
     protected $table = 'project_skills';
 
-    protected $fillable = ['proyect_id', 'skill_id', 'status', 'order'];
+    protected $fillable = ['project_id', 'skill_id', 'status', 'order'];
 
     public $timestamps = true;
     public function project() {
-        return $this->belongsTo(Project::class, 'proyect_id');
+        return $this->belongsTo(Project::class, 'project_id');
     }
 
     public function skill() {
