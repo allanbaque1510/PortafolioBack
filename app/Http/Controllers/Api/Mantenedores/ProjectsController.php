@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Api\Mantenedores;
 
 
 use App\Http\Controllers\Controller;
+use App\Models\Project;
 use App\Services\ProjectsService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ProjectsController extends Controller
 {
@@ -17,24 +19,42 @@ class ProjectsController extends Controller
     }
     public function index()
     {
-        return response()->json($this->_projectsService->getAll());
+        $projects = $this->_projectsService->getAll(); // Obtiene todos los proyectos
+        return view('admin.projects.index', compact('projects'));
+    }
+    /**
+     * Muestra el formulario para crear un nuevo proyecto.
+     */
+    public function create()
+    {
+        return view('admin.projects.create');
     }
 
     public function store(Request $request)
     {
-        return response()->json($this->_projectsService->create($request));
+        $this->_projectsService->create($request);
+        return redirect()->route('admin.projects.index')->with('success', 'Proyecto creado exitosamente.');
     }
 
-    public function update(Request $request, $id)
+    public function edit(Project $project)
     {
-        $social = $this->_projectsService->findOrFail($id);
-        return response()->json($this->_projectsService->update($social, $request->all()));
+        return view('admin.projects.edit', compact('project'));
     }
 
-    public function destroy($id)
+
+    public function update(Request $request, Project $project)
     {
-        $social = $this->_projectsService->findOrFail($id);
-        $this->_projectsService->delete($social);
-        return response()->json(['message' => 'Deleted']);
+        $this->_projectsService->update($project,$request);
+        return redirect()->route('admin.projects.index')->with('success', 'Proyecto actualizado exitosamente.');
     }
+
+    public function destroy(Project $project)
+    {
+        if ($project->image) {
+            Storage::disk('public')->delete($project->image);
+        }
+        $this->_projectsService->delete($project);
+        return redirect()->route('admin.projects.index')->with('success', 'Proyecto eliminado exitosamente.');
+    }
+
 }

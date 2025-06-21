@@ -13,6 +13,11 @@ class WorkExperience extends Model
         'start_date', 'end_date', 'is_current', 'company_logo',
         'company_website', 'company_location', 'language_id', 'status', 'order'
     ];
+     protected $casts = [
+        'start_date' => 'datetime',
+        'end_date' => 'datetime',
+    ];
+    
 
     public $timestamps = true;
     public function language() {

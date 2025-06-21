@@ -17,7 +17,10 @@ class Project extends Model
         'second_url_gihub',
         'language_id', 'status', 'order'
     ];
-
+    protected $casts = [
+        'start_date' => 'datetime',
+        'end_date' => 'datetime',
+    ];
     public $timestamps = true;
     public function language() {
         return $this->belongsTo(Language::class);

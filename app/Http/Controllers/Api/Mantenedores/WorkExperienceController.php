@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\Mantenedores;
 
 
 use App\Http\Controllers\Controller;
+use App\Models\WorkExperience;
 use App\Services\WorkExperienceService;
 use Illuminate\Http\Request;
 
@@ -17,24 +18,35 @@ class WorkExperienceController extends Controller
     }
     public function index()
     {
-        return response()->json($this->_workExperienceService->getAll());
+        $workExperiences = $this->_workExperienceService->getAll();
+        return view('admin.work-experience.index', compact('workExperiences'));
+    }
+    public function create()
+    {
+        return view('admin.work-experience.create');
     }
 
     public function store(Request $request)
     {
-        return response()->json($this->_workExperienceService->create($request));
+        $this->_workExperienceService->store($request);
+        return redirect()->route('admin.work-experience.index')->with('success', 'Experiencia laboral creada exitosamente.');
     }
 
-    public function update(Request $request, $id)
+    public function edit(WorkExperience $workExperience)
     {
-        $social = $this->_workExperienceService->findOrFail($id);
-        return response()->json($this->_workExperienceService->update($social, $request->all()));
+        return view('admin.work-experience.edit', compact('workExperience'));
     }
 
-    public function destroy($id)
+
+    public function update(Request $request, WorkExperience $workExperience)
     {
-        $social = $this->_workExperienceService->findOrFail($id);
-        $this->_workExperienceService->delete($social);
-        return response()->json(['message' => 'Deleted']);
+        $this->_workExperienceService->update($request, $workExperience);
+        return redirect()->route('admin.work-experience.index')->with('success', 'Experiencia laboral actualizada exitosamente.');
+    }
+
+    public function destroy(WorkExperience $work_experience)
+    {
+        $this->_workExperienceService->destroy($work_experience);
+        return redirect()->route('admin.work-experience.index')->with('success', 'Experiencia laboral eliminada exitosamente.');
     }
 }

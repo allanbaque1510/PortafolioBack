@@ -12,7 +12,10 @@ class Education extends Model
         'institution', 'level', 'profession', 'start_date', 'end_date',
         'city', 'country', 'description', 'language_id', 'status', 'order'
     ];
-
+     protected $casts = [
+        'start_date' => 'datetime',
+        'end_date' => 'datetime',
+    ];
     public $timestamps = true;
 
     public function language() {
