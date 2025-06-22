@@ -39,7 +39,7 @@ class ProjectsService
 
         // Convertir 'order' a int o null si está vacío
         $validatedData['order'] = $validatedData['order'] ?? 0;
-        $validatedData['status'] = $request->boolean('status');
+        $validatedData['status'] = $request->boolean('status') ?? true;
 
         return Project::create($validatedData);
     }

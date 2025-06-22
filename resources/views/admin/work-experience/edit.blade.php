@@ -11,7 +11,7 @@
     </div>
 
     <div class="content-card">
-        <form action="{{ route('admin.work-experience.update', $workExperience) }}" method="POST">
+        <form action="{{ route('admin.work-experience.update', $workExperience) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT') {{-- Importante para las actualizaciones --}}
 

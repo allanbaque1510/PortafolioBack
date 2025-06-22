@@ -11,7 +11,7 @@
     </div>
 
     <div class="content-card">
-        <form action="{{ route('admin.work-experience.store') }}" method="POST">
+        <form action="{{ route('admin.work-experience.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
 
             {{-- Incluye el partial del formulario. No pasamos $workExperience aquí porque no existe aún. --}}
