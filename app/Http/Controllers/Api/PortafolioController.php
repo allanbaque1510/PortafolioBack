@@ -47,7 +47,11 @@ class PortafolioController extends Controller
         try {
             $lang       = $request->has('lang') ? $request->lang : 'es';
             $lenguage   = Language::where('code',$lang)->first();
-            $projects   = Project::where('language_id', $lenguage->id)->orderBy('order')->get();
+            $projects   = Project::with(['projectSkills.skill'])->where('language_id', $lenguage->id)->orderBy('order')->get()->map(function ($project) {
+    $project->skills = $project->projectSkills->pluck('skill');
+    unset($project->projectSkills);
+    return $project;
+});
             $sections   = Section::where('language_id', $lenguage->id)->orderBy('order')->get();
 
             return response()->json([

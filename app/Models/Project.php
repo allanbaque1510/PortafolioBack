@@ -27,12 +27,12 @@ class Project extends Model
     }
 
     public function category() {
-        return $this->belongsTo(ProjectCategory::class,'proyect_id');
+        return $this->hasMany(ProjectCategory::class,'project_id');
     }
 
 
     public function projectSkills() {
-        return $this->hasMany(ProjectSkill::class, 'proyect_id');
+        return $this->hasMany(ProjectSkill::class, 'project_id');
     }
 
 }
