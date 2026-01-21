@@ -29,8 +29,10 @@ class ProjectsService
             'language_id' => 'required|integer', // Asumiendo un ID de idioma válido
             'status' => 'boolean',
             'order' => 'nullable|integer',
+            'skills' => 'nullable|array',
         ]);
-
+        
+        
         // Manejo de la imagen
         if ($request->hasFile('image')) {
             $imagePath = $request->file('image')->store('projects', 'public');
@@ -41,12 +43,19 @@ class ProjectsService
         $validatedData['order'] = $validatedData['order'] ?? 0;
         $validatedData['status'] = $request->boolean('status') ?? true;
 
-        return Project::create($validatedData);
+        $project = Project::create($validatedData);
+
+        if(isset($validatedData['skills'])) {
+            $project->skillsData()->sync($validatedData['skills']);
+            unset($validatedData['skills']);
+        }
+        
+        return $project;
     }
 
     public function update(Project $project, Request $request)
     {
-            $validatedData = $request->validate([
+        $validatedData = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
             'url' => 'nullable|url|max:255',
@@ -60,8 +69,13 @@ class ProjectsService
             'language_id' => 'required|integer',
             'status' => 'boolean',
             'order' => 'nullable|integer',
+            'skills' => 'nullable|array',
         ]);
-
+        
+        if(isset($validatedData['skills'])) {
+            $project->skillsData()->sync($validatedData['skills']);
+            unset($validatedData['skills']);
+        }
         // Manejo de la imagen: si hay una nueva, se sube y se elimina la vieja
         if ($request->hasFile('image')) {
             if ($project->image) {

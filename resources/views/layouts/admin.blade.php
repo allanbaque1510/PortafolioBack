@@ -5,13 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Admin Dashboard')</title>
 
-    {{-- Font Awesome para íconos --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
-    {{-- Tu archivo CSS principal para la administración --}}
     <link href="{{ asset('css/admin.css') }}" rel="stylesheet">
 
-    {{-- Para estilos específicos de cada página usando @push('styles') --}}
     @stack('styles')
 </head>
 <body>
@@ -39,10 +36,9 @@
         </aside>
 
         <main class="content-area">
-            {{-- Navbar --}}
             <nav class="navbar">
                 <div class="navbar-title">
-                    <h3>@yield('title', 'Página Actual')</h3> {{-- Título dinámico de la página --}}
+                    <h3>@yield('title', 'Página Actual')</h3> 
                 </div>
                 <div class="navbar-actions">
                     <form action="{{ route('logout') }}" method="POST">
@@ -53,15 +49,12 @@
                     </form>
                 </div>
             </nav>
-
-            {{-- Contenido de la página --}}
-            <div class="content-card"> {{-- Cambié de '.card' a '.content-card' para evitar conflictos si usas Bootstrap u otro framework --}}
+            <div class="content-card"> 
                 @yield('content')
             </div>
         </main>
     </div>
 
-    {{-- Para scripts específicos de cada página usando @push('scripts') --}}
     @stack('scripts')
 </body>
 </html>

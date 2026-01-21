@@ -32,9 +32,9 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::middleware('auth')->name('admin.')->group(function () {
     // Ruta del dashboard principal del admin (ya la movimos aquí)
     Route::get('/', function () {
-        $projectCount = Project::count(); // Asume que tienes un modelo Project
-        $serviceCount = Service::count(); // Asume que tienes un modelo Service
-        $workExperienceCount = WorkExperience::count(); // Asume que tienes un modelo workExperienceCount
+        $projectCount           = Project::where('language_id', '1')->count();
+        $serviceCount           = Service::where('language_id', '1')->count();
+        $workExperienceCount    = WorkExperience::where('language_id', '1')->count();
         return view('admin.dashboard', compact('projectCount', 'serviceCount', 'workExperienceCount'));
     })->name('dashboard');
 

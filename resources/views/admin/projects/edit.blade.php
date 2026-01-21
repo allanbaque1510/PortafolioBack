@@ -13,7 +13,7 @@
     <div class="content-card">
         <form action="{{ route('admin.projects.update', $project) }}" method="POST" enctype="multipart/form-data">
             @csrf
-            @method('PUT') {{-- Importante para las actualizaciones --}}
+            @method('PUT') 
 
             @include('admin.projects.form', ['project' => $project]) {{-- Pasa la variable $project al partial --}}
 

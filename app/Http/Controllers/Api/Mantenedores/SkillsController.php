@@ -15,9 +15,9 @@ class SkillsController extends Controller
     {
         $this->_skillService = $_skillService;
     }
-    public function index()
+    public function index(Request $request)
     {
-        return response()->json($this->_skillService->getAll());
+        return response()->json($this->_skillService->getAll($request));
     }
 
     public function store(Request $request)

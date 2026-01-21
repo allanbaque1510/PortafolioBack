@@ -7,9 +7,10 @@ use Illuminate\Http\Request;
 
 class SkillService
 {
-    public function getAll()
+    public function getAll(Request $request)
     {
-        return Skill::orderBy('order')->get();
+        $idioma = $request->input('language_id'); 
+        return Skill::where('language_id', $idioma)->orderBy('order')->get();
     }
 
     public function create(Request $request)
